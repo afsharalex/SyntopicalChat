@@ -1,0 +1,1 @@
+"""CLI interface module for the SyntopicalChat application."""

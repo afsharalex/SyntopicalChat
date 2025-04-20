@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  syntopicalchat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./data/pdfs:/data/pdfs
+      - ./data/chroma_db:/data/chroma_db
+      - ./data/arxiv_papers:/data/arxiv_papers
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    command: start
+    stdin_open: true
+    tty: true

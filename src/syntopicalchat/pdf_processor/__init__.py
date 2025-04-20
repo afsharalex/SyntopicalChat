@@ -1,0 +1,1 @@
+"""PDF processing module for extracting text and metadata from academic papers."""
