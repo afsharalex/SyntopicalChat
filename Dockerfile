@@ -31,6 +31,9 @@ RUN poetry install --no-interaction --no-ansi
 # Copy application code
 COPY . .
 
+# Install the package in development mode
+RUN pip install -e .
+
 # Create data directories
 RUN mkdir -p /data/pdfs /data/chroma_db /data/arxiv_papers
 

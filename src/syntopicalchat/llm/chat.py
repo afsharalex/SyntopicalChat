@@ -31,27 +31,28 @@ class SyntopicalChat:
             max_tokens: Maximum number of tokens to generate.
         """
         self.vector_db = vector_db
-        
+
         # Check if OpenAI API key is set
         if not os.environ.get("OPENAI_API_KEY"):
             raise ValueError(
                 "OPENAI_API_KEY environment variable is not set. "
                 "Please set it to use the chat interface."
             )
-        
+
         # Initialize the language model
         self.llm = ChatOpenAI(
             model_name=model_name,
             temperature=temperature,
             max_tokens=max_tokens,
         )
-        
+
         # Initialize conversation memory
         self.memory = ConversationBufferMemory(
             memory_key="chat_history",
             return_messages=True,
+            output_key="answer",
         )
-        
+
         # Initialize the retrieval chain
         self.chain = self._create_chain()
 
@@ -83,10 +84,10 @@ class SyntopicalChat:
         """
         # Add syntopical analysis context to the query
         enhanced_query = self._enhance_query(query)
-        
+
         # Get response from the chain
         response = self.chain({"question": enhanced_query})
-        
+
         return {
             "answer": response["answer"],
             "source_documents": response["source_documents"],
@@ -132,10 +133,10 @@ class SyntopicalChat:
             "6. Synthesis of the most important insights\n\n"
             "For each point, cite specific papers and explain how they contribute to the understanding of the topic."
         )
-        
+
         # Get response from the chain
         response = self.chat(analysis_prompt)
-        
+
         return response
 
     def reset_conversation(self) -> None:
